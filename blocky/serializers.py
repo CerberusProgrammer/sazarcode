@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, CustomUser
+from .models import Category, CustomUser, Note
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,4 +14,9 @@ class UserSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        exclude = ['user']
+
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = ['id', 'category', 'title', 'content', 'created_at']
