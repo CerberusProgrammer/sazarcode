@@ -1,0 +1,17 @@
+format for register
+{
+    "username": "cerberus",
+    "email": "cerberus@gmail.com",
+    "password": "lastuser"
+}
+
+format for login
+{
+    "email": "cerberus@gmail.com",
+    "password": "lastuser"
+}
+
+format for login token
+{
+    "token": "token_number"
+}
