@@ -292,3 +292,28 @@ def edit_note_in_category(request, category_id, note_id):
         
         serialized_note = NoteSerializer(note)
         return Response(serialized_note.data, status=status.HTTP_200_OK)
+
+@api_view(['DELETE'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def delete_note(request, category_id, note_id):
+    token = request.data.get('token', None)
+    if token is None:
+        return Response({'detail': 'Authentication credentials were not provided.'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+    try:
+        user = Token.objects.get(key=token).user
+    except CustomUser.DoesNotExist:
+        return Response({'detail': 'Invalid token.'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+    try:
+        category = Category.objects.get(id=category_id, user=user)
+    except Category.DoesNotExist:
+        return Response({'message': 'Category not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    try:
+        note = Note.objects.get(id=note_id, category=category)
+        note.delete()
+        return Response({'message': 'Note deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+    except Note.DoesNotExist:
+        return Response({'message': 'Note not found'}, status=status.HTTP_404_NOT_FOUND)
