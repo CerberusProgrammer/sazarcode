@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -10,6 +11,8 @@ SECRET_KEY = 'django-insecure-x2id5*^&r+7r0i7i$zp0!5%yh=#^j1_n@zr0rx*8pff1n&lg0f
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+# Define the custom user model
 AUTH_USER_MODEL = 'blocky.CustomUser'
 
 # Application definition
@@ -21,7 +24,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-        
     ),
 }
 
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -64,9 +67,10 @@ TEMPLATES = [
         },
     },
 ]
+# Agregar el directorio 'templates' al final de la lista DIRS
+TEMPLATES[0]['DIRS'] += [os.path.join(BASE_DIR, 'templates')]
 
 WSGI_APPLICATION = 'sazarcode.wsgi.application'
-
 
 DATABASES = {
     'default': {
@@ -91,13 +95,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# Corregir la configuración de STATIC_URL
+STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

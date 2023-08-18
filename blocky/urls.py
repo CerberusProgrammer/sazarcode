@@ -1,15 +1,6 @@
 from django.urls import path
 from . import views
 
-from django.urls import path
-from . import views
-
-from rest_framework.routers import DefaultRouter
-
-router = DefaultRouter()
-router.register(r'categories', views.CategoryViewSet)
-router.register(r'notes', views.NoteViewSet)
-
 urlpatterns = [
     # Login / Register URLs
     path('register/', views.register, name='register'),  # Registro de usuario
@@ -30,5 +21,3 @@ urlpatterns = [
     path('categories/<int:category_id>/notes/<int:note_id>/delete/', views.delete_note, name='delete_note'),  # Eliminar una nota
     path('categories/<int:category_id>/notes/<int:note_id>/', views.view_note, name='view_note'),  # Ver el contenido de una nota
 ]
-
-urlpatterns += router.urls
