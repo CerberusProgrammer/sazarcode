@@ -10,7 +10,8 @@ SECRET_KEY = 'django-insecure-x2id5*^&r+7r0i7i$zp0!5%yh=#^j1_n@zr0rx*8pff1n&lg0f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Configuración para escuchar en todas las interfaces
+ALLOWED_HOSTS = ['*']
 
 # Define the custom user model
 AUTH_USER_MODEL = 'blocky.CustomUser'
