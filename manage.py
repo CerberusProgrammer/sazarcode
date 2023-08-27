@@ -2,7 +2,6 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-#new uwu
 
 def main():
     """Run administrative tasks."""
