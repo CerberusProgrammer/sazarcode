@@ -1,23 +1,25 @@
 from rest_framework import generics
 from .models import Post
 from .serializer import PostSerializer
-from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.models import User
 
+from decouple import config
+
 class PasswordAuthentication(BaseAuthentication):
     def authenticate(self, request):
         password = request.META.get('HTTP_PASSWORD')
+        correct_password = config('PASSWORD', default='default_password')
+        print(correct_password)
 
         if password:
-            # Verificar si la contraseña coincide con la del usuario deseado
-            if password == '123456':
+            if password == correct_password:
                 return (User(), None)
             else:
-                raise AuthenticationFailed('Contraseña incorrecta')
+                raise AuthenticationFailed('Incorrect password')
         
         return None
 

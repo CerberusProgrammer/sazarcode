@@ -4,17 +4,11 @@ from django.db import models
 from django.utils.html import mark_safe
 import markdown
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content_md = models.TextField()  # Markdown content
     publication_date = models.DateTimeField(auto_now_add=True)
-    categories = models.ManyToManyField(Category, blank=True, null=True)
+    category = models.CharField(max_length=24)
 
     def __str__(self):
         return self.title
