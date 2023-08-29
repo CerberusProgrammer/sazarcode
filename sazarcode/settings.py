@@ -30,6 +30,7 @@ REST_FRAMEWORK = {
 
 INSTALLED_APPS = [
     'blocky',
+    'blog',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
