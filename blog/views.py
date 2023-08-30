@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.models import User
+from rest_framework.response import Response
 
 from decouple import config
 
@@ -38,6 +39,36 @@ class PostList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+class CategoryList(generics.ListAPIView):
+    """
+    Endpoint for listing unique categories.
+
+    - To list unique categories:
+      GET /api/categories/
+    """
+    authentication_classes = [PasswordAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        categories = Post.objects.values_list('category', flat=True).distinct()
+        return Response(categories)
+
+class PostCategoryList(generics.ListAPIView):
+    """
+    Endpoint for listing blog posts by category.
+
+    - To list posts by category:
+      GET /api/posts/category/{category_name}/
+    """
+    authentication_classes = [PasswordAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        category_name = self.kwargs['category_name']
+        queryset = Post.objects.filter(category__iexact=category_name)
+        return queryset
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
