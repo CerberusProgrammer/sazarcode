@@ -1,2 +1,6 @@
 Django
 djangorestframework
+python-decouple
+pip-tools
+Markdown
+drf-yasg
