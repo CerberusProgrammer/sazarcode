@@ -6,7 +6,7 @@ import markdown
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    content_md = models.TextField()  # Markdown content
+    content_md = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=100)
 
@@ -14,4 +14,4 @@ class Post(models.Model):
         return self.title
 
     def content_as_html(self):
-        return mark_safe(markdown.markdown(self.content_md))  # Convert Markdown to HTML and mark as safe
+        return mark_safe(markdown.markdown(self.content_md))
